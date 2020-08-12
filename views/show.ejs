@@ -1,0 +1,62 @@
+<h1>Search results for <%= match.place_name %></h1>
+
+<p id="long">Longitude is : <%= match.center[0] %></p>
+<p id="lat">Latitude is : <%= match.center[1] %></p>
+
+
+<div>
+    <form method="POST" action="/search/fave">
+        <input type="hidden" name="city" value="<%= match.place_name.split(',')[0]%>">
+        <input type="hidden" name="state" value="<%= match.place_name.split(',')[1]%>">
+        <input type="hidden" name="long" value="<%= match.center[0]%>">
+        <input type="hidden" name="lat" value="<%= match.center[0]%>">
+        <button type="submit">Favorite!</button>
+    </form>
+</div>
+<div id="map">
+    <script>
+        // let lat = document.getElementById('lat').textContent
+        // let long = document.getElementById('long').textContent
+        mapboxgl.accessToken = '<%= mapkey %>'
+        let map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [<%= match.center[0] %>, <%= match.center[1] %>],
+            zoom: 12
+        })
+        let geojson = {
+            type: 'FeatureCollection',
+            features: [{
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [<%= match.center[0] %>, <%= match.center[1] %>]
+                },
+                properties: {
+                    title: 'Mapbox',
+                    description: '<%= match.place_name %>'
+                }
+            },
+            {
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [-122.2228, 37.1716]
+                },
+                properties: {
+                    title: 'Mapbox',
+                    description: 'Dope vacation spot'
+                }
+            }
+        ]
+        }
+        geojson.features.forEach((marker)=> {
+            let el = document.createElement('div')
+            el.className = 'marker'
+            new mapboxgl.Marker(el)
+            .setLngLat(marker.geometry.coordinates)
+            .addTo(map)
+        })
+    </script>
+</div>
+

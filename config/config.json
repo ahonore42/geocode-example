@@ -1,0 +1,19 @@
+{
+  "development": {
+    "database": "cool_places",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+  
+    "database": "cool_places",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+   
+    "database": "cool_places",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}

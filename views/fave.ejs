@@ -1,0 +1,9 @@
+<h1>My Favorite Places!</h1>
+
+<% places.forEach(function(p) { %>
+    <div>
+        <h1><%= p.city %>, <%= p.name %></h1>
+        <p>Latitude: <%= p.lat %> </p>
+        <p>Longitude: <%= p.long %> </p>
+    </div>
+  <% }) %>
